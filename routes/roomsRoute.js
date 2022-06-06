@@ -35,7 +35,7 @@ router.get("/getallrooms", async (req, res) => {
 router.post("/getroombyid", async(req, res) => {
      console.log(req.body);
      try {
-          const room = await Room.findOne({'_id' : req.body.roomid})
+          const room = await Room.findOne({'id' : req.body.roomid})
           res.send(room)
      } catch (error) {
           return res.status(400).json({ message: error });
@@ -77,5 +77,17 @@ router.post("/addroom", async(req, res) => {
      }
 });
 
+router.post("/deleteroom", async(req, res) => {
+  
+     const roomid = req.body.roomid
+ 
+     try {
+         await Room.findOneAndDelete({_id : roomid})
+         res.send('Room Deleted Successfully')
+     } catch (error) {
+         return res.status(400).json({ message: error });
+     }
+ 
+ });
 
 module.exports = router
